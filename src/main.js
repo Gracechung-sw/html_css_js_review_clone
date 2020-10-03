@@ -41,10 +41,42 @@ function createHTMLString(item) {
 </li>`
 }
 
+function setEventListener(items) {
+  const logo = document.querySelector('.logo')
+  const buttons = document.querySelector('.buttons') //이벤트 위임 사용
+  logo.addEventListener('click', () => {
+    displayItems(items) //logo 클릭시 전체 items 보여줌
+  })
+  buttons.addEventListener('click', (event) => {
+    //reference: https://www.w3schools.com/jsref/met_element_addeventlistener.asp
+    onButtonClick(event, items)
+  })
+}
+
+function onButtonClick(event, items) {
+  //인자로 받아온 event와 items가 뭘까?
+  console.log(event, items)
+
+  //어떻게 filtering 할까? HTML에 custom property 사용
+  console.log(event.target.dataset.key) //data-key="type"
+  console.log(event.target.dataset.value) // data-value="tshirt"
+
+  const dataset = event.target.dataset
+  const key = dataset.key
+  const value = dataset.value
+
+  if (key === null || value === null) {
+    return
+  }
+  const filteredItem = items.filter((item) => item[key] === values)
+  console.log(filteredItem)
+  displayItmes(filteredItem)
+}
+
 loadItems()
   .then((items) => {
     displayItems(items)
-    // setEventListener(items)
+    setEventListener(items)
   })
   .catch((err) => {
     console.error(err)
