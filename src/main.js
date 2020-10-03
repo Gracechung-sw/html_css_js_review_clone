@@ -21,9 +21,29 @@ function loadItems() {
     })
 }
 
+//Update the list with the given items
+function displayItmes(items) {
+  //items Array
+  const container = document.querySelector('.items')
+  //items 데이터 배열을 HTML 요소 <li> 로 변환해주어야 한다. (매핑 해준다.)
+  //이처럼 어떤 배열을 다른 형태의 배열로 변환해줄 때는 map을 이용하면 Good
+  container.innerHTML = items.map((item) => {
+    //일러면 items 가 HTML 요소 <li> 변환된 문자열이 element인 배열이 생성된다.
+    createHTMLString(item).join('') //이걸 하나의 문자열로 합쳐서 HTML로 전달해주어야 한다. 이때 join이용
+  })
+}
+
+//Create HTML list item from the given data item
+function createHTMLString(item) {
+  return `<li class="item">
+  <img src=${item.imgae} , alt=${items.type} , class="item_thumbnail" />
+  <span class="item_description">${items.gender} ${items.size} ${items.color}</span>
+</li>`
+}
+
 loadItems()
   .then((items) => {
-    // displayItems(items)
+    displayItems(items)
     // setEventListener(items)
   })
   .catch((err) => {
